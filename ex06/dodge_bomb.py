@@ -27,7 +27,7 @@ class Bird:
 
     def __init__(self, fig, rate, xy):
         self.rate = rate
-        self.sfc = pg.image.load(fig)
+        self.sfc = pg.image.load(fig).convert_alpha()
         self.sfc = pg.transform.rotozoom(self.sfc, 0, self.rate)
         self.rct = self.sfc.get_rect()
         self.rct.center = xy
@@ -47,6 +47,10 @@ class Bird:
                 self.rct.centerx -= delta[0]
                 self.rct.centery -= delta[1]
         self.blit(scr)
+        for event in pg.event.get():
+            if event.type == pg.MOUSEMOTION:              #もしイベントがMOUSEMOTIONなら
+                self.rct.centerx, self.rct.centery = event.pos    #tori.rct.centerx,tori.rct.centeryにマウスカーソルの座標を取得
+                
     
     # 画像の変更
     def change_image(self, fig):
@@ -94,6 +98,7 @@ def check_bound(obj_rct, scr_rct):
     return yoko, tate
 
 
+
 def main():
     clock =pg.time.Clock()
     # スクリーンの表示
@@ -116,11 +121,9 @@ def main():
         color = colors[i % 5]
         bombs.append(Bomb(color, 10, (vx, vy), SR))
         bombs[i].update(SR)
-
     while True:
         SR.blit()
         SR.sfc.blit(gd_sfc, gd_rct)
-
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return
