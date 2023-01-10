@@ -47,8 +47,10 @@ class Bird:
                 self.rct.centerx -= delta[0]
                 self.rct.centery -= delta[1]
         self.blit(scr)
+
+        #津野翔哉担当　C0A21089
         for event in pg.event.get():
-            if event.type == pg.MOUSEMOTION:              #もしイベントがMOUSEMOTIONなら
+            if event.type == pg.MOUSEMOTION:              #もしイベントタイプががMOUSEMOTIONなら
                 self.rct.centerx, self.rct.centery = event.pos    #tori.rct.centerx,tori.rct.centeryにマウスカーソルの座標を取得
                 
     
